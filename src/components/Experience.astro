@@ -1,0 +1,35 @@
+---
+import { t, type Lang } from '../lib/i18n'
+
+interface Props { lang?: Lang }
+const { lang = 'en' } = Astro.props
+const exp = t[lang].experience
+---
+
+<section class="px-3 md:px-10 py-10" id="experience">
+  <div class="max-w-4xl mx-auto">
+    <h1 class="text-4xl font-medium mb-10">{exp.heading}</h1>
+
+    <div class="flex flex-col gap-8">
+      {exp.jobs.map(job => (
+        <div class="bg-white border-2 border-black p-6 shadow-[6px_6px_0px_rgba(0,0,0,0.3)]">
+          <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-1 mb-4">
+            <div>
+              <h2 class="text-xl font-bold">{job.role}</h2>
+              <p class="text-base">{job.org}</p>
+            </div>
+            <span class="text-sm font-mono bg-[var(--blue)] border border-black px-2 py-1 whitespace-nowrap">{job.period}</span>
+          </div>
+          <ul class="flex flex-col gap-2">
+            {job.bullets.map(b => (
+              <li class="flex gap-2 text-sm">
+                <span class="font-bold mt-0.5">—</span>
+                <span>{b}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

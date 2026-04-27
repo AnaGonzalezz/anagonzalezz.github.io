@@ -1,19 +1,21 @@
 ---
 import Button from "./Button.astro"
 import Bars from "./Bars.astro"
+import { t, type Lang } from '../lib/i18n'
+import { author } from '../sample'
 
+import perfilImg from '../assets/demo/perfil.jpeg'
 import svgheroContent from '../assets/hero-content.svg'
 import svgRedStar from '../assets/red-star.svg'
 import svgIdea from '../assets/idea.svg'
 import svgArrow from '../assets/arrow.svg'
-
 import svgPinkStar from '../assets/pink-star.svg'
 import svgString from '../assets/string.svg'
 
-import { author, buy } from '../sample'
-
+interface Props { lang?: Lang }
+const { lang = 'en' } = Astro.props
+const h = t[lang].hero
 ---
-
 
 <section class="pb-20 relative">
     <div class="max-w-4xl mx-auto p-4 pt-20 md:pt-30">
@@ -22,20 +24,19 @@ import { author, buy } from '../sample'
           <img src={svgheroContent.src} alt="logo" width="80" />
 
             <h1 class="text-5xl font-medium">
-              <span>I build top <br> notch</span>
+              <span>{h.line1} <br></span>
               <span class="relative">
                 <span class="absolute bg-[var(--yellow)] w-full h-[50%] left-0 bottom-0 z-1"></span>
-                <span class="relative z-5">websites</span>
+                <span class="relative z-5">{h.highlight}</span>
               </span>
             </h1>
-            <p class="text-xl">Passionate UX Engineer & Designer crafting intuitive, user-centered experiences.</p>
+            <p class="text-xl">{h.subtitle}</p>
            <div class="flex mt-5">
-             <Button text="See portfolio" link="/#work" target="_self" />
+             <Button text={h.cta} link="/#work" target="_self" />
            </div>
         </div>
         <div class="relative mt-40 md:mt-0">
           <div class="flex absolute -top-20 left-0 z-10">
-            <!-- name with smile icon -->
             <div class="flex transform -rotate-30 translate-y-3">
               <svg class="size-5" viewBox="0 0 37 35" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M19.5479 4.4031C18.6713 5.80238 19.9271 9.81219 21.7001 11.2897C23.0602 12.3947 24.0665 11.888 24.3315 9.94798C24.6359 7.90326 23.1377 5.00064 21.4323 4.27109C20.1328 3.70088 19.9764 3.72964 19.5479 4.4031Z" fill="black"/>
@@ -50,10 +51,10 @@ import { author, buy } from '../sample'
 
           <div class="relative p-8 bg-white">
             <img src={svgRedStar.src} width="80" alt="red-star" class="absolute bottom-1 right-1 z-10" />
-            <img src={svgIdea.src} width="60" alt="idea" class="absolute top-16 -left-3 z-10" />   
-            <img src={svgString.src} width="50" alt="string" class="absolute -top-6 -right-2 z-10" />             
-          
-             <div id="me" class="w-full h-[310px] border-2"></div>
+            <img src={svgIdea.src} width="60" alt="idea" class="absolute top-16 -left-3 z-10" />
+            <img src={svgString.src} width="50" alt="string" class="absolute -top-6 -right-2 z-10" />
+
+             <div class="w-full h-[310px] border-2" style={`background-image: url('${perfilImg.src}'); background-position: top; background-size: cover;`}></div>
              <Bars />
           </div>
         </div>
@@ -63,12 +64,3 @@ import { author, buy } from '../sample'
 
     <img src={svgPinkStar.src} alt="start" width="50" class="absolute -bottom-4" />
   </section>
-
-
-  <style>
-    #me{
-     background-image: url('https://images.pexels.com/photos/1858175/pexels-photo-1858175.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2');
-     background-position: top;
-     background-size: cover;
-    }
-   </style>

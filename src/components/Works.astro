@@ -1,52 +1,133 @@
 ---
 import Bars from "./Bars.astro"
-import { buy } from "../sample"
+import { t, type Lang } from '../lib/i18n'
 
 import svgUnderline from '../assets/underline.svg'
 import arrowCard from '../assets/arrow-card.svg'
 
-const portfolio = [
-  { 
-    name: 'Portfolio design', desc: `UI design - User research - webflow development`,
-    cover: `https://images.pexels.com/photos/1051075/pexels-photo-1051075.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2`
+import unwheelsCover   from '../assets/demo/unwheels.png'
+import unchazaCover    from '../assets/demo/unchaza.png'
+import auroraCover     from '../assets/demo/aurora.png'
+import heartCover      from '../assets/demo/heartapp.png'
+import studybuddyCover from '../assets/demo/studybuddy.png'
+import docenteCover    from '../assets/demo/evaluaciondocente.png'
+
+interface Props { lang?: Lang }
+const { lang = 'en' } = Astro.props
+const heading = t[lang].works.heading
+
+const projects = [
+  {
+    name: `UNWheels`,
+    desc: {
+      en: `Ride-sharing platform for UNAL campus with microservices architecture. I built the mobile app (Flutter) and the initial React frontend.`,
+      es: `Plataforma de carpooling en la UNAL con arquitectura de microservicios. Desarrollé la app móvil en Flutter y el frontend inicial en React.`,
+    },
+    tags: [`Flutter`, `Dart`, `React`, `NestJS`, `TypeScript`],
+    link: `https://github.com/UN-Wheels`,
+    cover: unwheelsCover.src,
+    demo: null,
   },
-  { 
-    name: 'Portfolio design', desc: `UI design - User research - webflow development`,
-    cover: `https://images.pexels.com/photos/2303781/pexels-photo-2303781.jpeg?auto=compress&cs=tinysrgb&w=1600`
+  {
+    name: `UNChaza`,
+    desc: {
+      en: `Mobile app to digitize campus vendors at UNAL, connecting students with local businesses via Google Maps.`,
+      es: `App móvil para digitalizar las chazas de la UNAL, conectando estudiantes con vendedores del campus mediante Google Maps.`,
+    },
+    tags: [`Flutter`, `Dart`, `NestJS`, `PostgreSQL`],
+    link: `https://github.com/SamuelVar05/Proyecto_IngeSoft`,
+    cover: unchazaCover.src,
+    demo: null,
   },
-  { 
-    name: 'Portfolio design', desc: `UI design - User research - webflow development`,
-    cover: `https://images.pexels.com/photos/441963/pexels-photo-441963.jpeg?auto=compress&cs=tinysrgb&w=1600`
+  {
+    name: `Aurora`,
+    desc: {
+      en: `AI legal assistant for female GBV victims in Colombia — NLP chatbot, voice recognition and personalized reporting routes.`,
+      es: `Asistente legal con IA para mujeres víctimas de violencia de género en Colombia. Chatbot con PLN, reconocimiento de voz y rutas de denuncia personalizadas.`,
+    },
+    tags: [`FastAPI`, `React`, `Gemini AI`, `Python`],
+    link: `https://github.com/anagonzalezz/Aurora`,
+    cover: auroraCover.src,
+    demo: null,
   },
-  { 
-    name: 'Portfolio design', desc: `UI design - User research - webflow development`,
-    cover: `https://images.pexels.com/photos/245240/pexels-photo-245240.jpeg?auto=compress&cs=tinysrgb&w=1600`
+  {
+    name: `HeartSoundApp`,
+    desc: {
+      en: `Smart digital stethoscope with deep learning for real-time cardiac pathology classification — 98.2% accuracy.`,
+      es: `Estetoscopio digital inteligente con deep learning para clasificación de patologías cardiacas en tiempo real — 98.2% de accuracy.`,
+    },
+    tags: [`FastAPI`, `React`, `Python`, `ML`],
+    link: `https://github.com/anagonzalezz/HeartSoundApp`,
+    cover: heartCover.src,
+    demo: `https://drive.google.com/file/d/1zOgef2I8vn1DZElzZGyuqlg30RhYEiQ_/view?usp=sharing`,
+  },
+  {
+    name: `StudyBuddy`,
+    desc: {
+      en: `Gamified English vocabulary learning app with interactive exercises and optimized data structures.`,
+      es: `App móvil gamificada para aprender vocabulario en inglés, con ejercicios interactivos y estructuras de datos optimizadas.`,
+    },
+    tags: [`Flutter`, `Dart`],
+    link: `https://github.com/anagonzalezz/StudyBuddy`,
+    cover: studybuddyCover.src,
+    demo: null,
+  },
+  {
+    name: `Evaluación Docente`,
+    desc: {
+      en: `Teacher and course evaluation platform for Universidad Nacional de Colombia. Led the frontend development with Django + MySQL backend.`,
+      es: `Plataforma de evaluación de profesores y materias en la UNAL. Lideré el desarrollo del frontend con backend en Django y MySQL.`,
+    },
+    tags: [`Django`, `MySQL`, `JavaScript`],
+    link: `https://github.com/anagonzalezz/ProyectoEvaluacionDocente`,
+    cover: docenteCover.src,
+    demo: null,
   },
 ]
 ---
 
-
 <section class="py-25 space-y-10 px-5" id="work">
-    <div class="max-w-md mx-auto relative ">
-      <h1 class="text-4xl font-medium text-center">My Portfolio</h1>
+    <div class="max-w-md mx-auto relative">
+      <h1 class="text-4xl font-medium text-center">{heading}</h1>
       <img src={svgUnderline.src} alt="arrow" width="140" class="absolute left-50 -bottom-1" />
     </div>
-  
-    <div class="max-w-3xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10"> 
-      {portfolio.map(item => ( 
-        <a href={buy.link} target="_blank" class="flex flex-col bg-white p-5 group relative transition-all duration-200 hover:shadow-[4px_4px_0px_rgba(0,0,0,0.3)]">
+
+    <div class="max-w-3xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10">
+      {projects.map(item => (
+        <a href={item.link} target="_blank" class="flex flex-col bg-white p-5 group relative transition-all duration-200 hover:shadow-[4px_4px_0px_rgba(0,0,0,0.3)]">
           <div class="w-full h-[200px] overflow-hidden border-2">
-           <img src={item.cover} alt="" class="w-full h-full object-cover" />
+           <img src={item.cover} alt={item.name} class="w-full h-full object-cover" />
           </div>
-          <div class="space-y-1 pt-4">
+          <div class="space-y-1 pt-4 flex-1">
             <div class="flex pr-2">
               <h2 class="text-xl font-medium flex-1">{item.name}</h2>
               <img src={arrowCard.src} alt="arrow" width="25" />
             </div>
-            <p class="mr-20">{item.desc}</p>
+            <p class="mr-20">{item.desc[lang]}</p>
+            <div class="flex flex-wrap gap-2 pt-2">
+              {item.tags.map(tag => (
+                <span class="text-xs font-medium px-2 py-1 border-2 border-black bg-[var(--yellow)]">{tag}</span>
+              ))}
+            </div>
+            {item.demo && (
+              <span
+                class="demo-link inline-block mt-2 text-xs font-bold underline cursor-pointer hover:text-red-600"
+                data-url={item.demo}
+              >▶ Watch demo</span>
+            )}
           </div>
           <Bars />
         </a>
       ))}
     </div>
 </section>
+
+<script>
+  document.querySelectorAll('.demo-link').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.preventDefault()
+      e.stopPropagation()
+      window.open((el as HTMLElement).dataset.url, '_blank')
+    })
+  })
+</script>

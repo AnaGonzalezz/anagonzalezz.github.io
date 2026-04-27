@@ -1,13 +1,17 @@
 ---
 import logoStar from '../assets/logo-star.svg'
 import { author } from '../sample'
+import { t, type Lang } from '../lib/i18n'
+
+interface Props { lang?: Lang }
+const { lang = 'en' } = Astro.props
+const copy = t[lang].footer.copy
 
 const socials = [
-  { icon: 'ri-tiktok-fill', link: author.tiktok },
-	{ icon: 'ri-instagram-line', link: author.ig },
-  { icon: 'ri-twitter-x-line', link: author.x },
+  { icon: 'ri-linkedin-box-line', link: author.linkedin },
+  { icon: 'ri-github-line', link: author.github },
+  { icon: 'ri-mail-line', link: author.email },
 ]
-
 ---
 
 <footer class="border-t-4 px-5 md:px-0 py-10 mt-30">
@@ -18,10 +22,10 @@ const socials = [
         </a>
       </div>
       <div class="text-center">
-        <p>© {new Date().getFullYear()} {author.nickname}. All rights reserved.</p>
+        <p>© {new Date().getFullYear()} {author.nickname}. {copy}</p>
       </div>
       <div class="flex md:justify-end gap-5">
-        {socials.map(item => ( 
+        {socials.map(item => (
           <a href={item.link} target="_blank" class="transition-all duration-200 hover:translate-y-[2px]"><i class={`${item.icon} text-2xl`}></i></a>
         ))}
       </div>
